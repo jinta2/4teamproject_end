@@ -1,0 +1,48 @@
+{% extends 'sort_base.html' %}
+
+{% load static %}
+
+{% block content2 %}
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container aos-init aos-animate" data-aos="fade-up">
+         <div class="section-title">
+           <h2>시/군/구</h2>
+           <p>가고 싶은 곳 다 고르개!</p>
+         </div>
+          <form id="dataform" method="get" action="/appfordog/sort_end/">
+              <input type="text"  name="result_r1" value="{{  results.result_r1  }}"  style="display: none;">
+              <input type="text"  name="result_m1" value="{{  results.result_m1  }}"  style="display: none;">
+              <input type="text"  name="result_r2" value="{{  results.result_r2  }}"  style="display: none;">
+              <input type="text" name="category_id" value="{{ category_id }}" style="display: none;">
+              {% for id in type_id %}
+                <input type="text" name="type_id" value="{{ id }}" style="display: none;">
+              {% endfor %}
+              <input type="text" name="state_id" value="{{ state_id }}" style="display: none;">
+              {% block content5 %}
+              {% endblock %}
+          </form>
+          <br><br>
+          <div id="multisort2" style="text-align: center;">
+               <a class="portfolio-btn" href="/appfordog/sort_r2/">이전으로 가시개</a>
+               <a class="portfolio-btn come" href="#"> 다음으로 가시개</a>
+          </div>
+      </div>
+    </section><!-- End Portfolio Section -->
+
+    <script type="text/javascript">
+      var callBack = function(event){
+        var checkedInputs = $('[name=result_m2]:checked');
+        $(checkedInputs).each(function(i, input){
+            var checkedInput = $(input);
+            var idInput = checkedInput.closest('li').find('input:eq(0)');
+            idInput.trigger('click');
+        });
+
+        var form = $('#dataform');
+        form.submit();
+      };
+
+      $('#multisort2 a.come').on('click', callBack);
+    </script>
+{% endblock %}
